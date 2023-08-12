@@ -4,6 +4,8 @@
 
 package com.mycompany.invite.me;
 
+import com.mycompany.invite.me.GUI.mainFrame;
+
 /**
  *
  * @author Admin
@@ -11,12 +13,16 @@ package com.mycompany.invite.me;
 public class InviteMe {
 
     public static void main(String[] args) {
-           java.awt.EventQueue.invokeLater(new Runnable() {
+//           java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new eventGUI().setVisible(true);
+//            }
+//        });     
+//        
+ java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new eventGUI().setVisible(true);
+                new mainFrame().setVisible(true);
             }
-        });     
-        
-
+        });
     }
 }
