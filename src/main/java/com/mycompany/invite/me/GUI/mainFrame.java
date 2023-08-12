@@ -68,7 +68,6 @@ public class mainFrame extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1500, 800));
 
         sidePanel.setBackground(new java.awt.Color(217, 217, 217));
         sidePanel.setPreferredSize(new java.awt.Dimension(300, 800));
@@ -229,7 +228,7 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(1166, Short.MAX_VALUE)
                 .addComponent(crtEvtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
@@ -296,7 +295,7 @@ public class mainFrame extends javax.swing.JFrame {
         eventPanel.setLayout(eventPanelLayout);
         eventPanelLayout.setHorizontalGroup(
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         eventPanelLayout.setVerticalGroup(
@@ -399,7 +398,7 @@ public class mainFrame extends javax.swing.JFrame {
         attendeePanel.setLayout(attendeePanelLayout);
         attendeePanelLayout.setHorizontalGroup(
             attendeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         attendeePanelLayout.setVerticalGroup(
@@ -502,7 +501,7 @@ public class mainFrame extends javax.swing.JFrame {
         RevenuePanel.setLayout(RevenuePanelLayout);
         RevenuePanelLayout.setHorizontalGroup(
             RevenuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         RevenuePanelLayout.setVerticalGroup(
@@ -605,7 +604,7 @@ public class mainFrame extends javax.swing.JFrame {
         ExpensePanel.setLayout(ExpensePanelLayout);
         ExpensePanelLayout.setHorizontalGroup(
             ExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ExpensePanelLayout.setVerticalGroup(
@@ -708,7 +707,7 @@ public class mainFrame extends javax.swing.JFrame {
         ReportPanel.setLayout(ReportPanelLayout);
         ReportPanelLayout.setHorizontalGroup(
             ReportPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ReportPanelLayout.setVerticalGroup(
@@ -795,7 +794,12 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_crtRevActionPerformed
 
     private void crtExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crtExpActionPerformed
-        // TODO add your handling code here:
+    
+ java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new createExp().setVisible(true);
+            }
+        });        // TODO add your handling code here:
     }//GEN-LAST:event_crtExpActionPerformed
 
     private void genReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genReportActionPerformed
