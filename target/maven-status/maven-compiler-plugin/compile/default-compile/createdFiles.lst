@@ -6,11 +6,15 @@ com\mycompany\invite\me\GUI\mainFrame$13.class
 com\mycompany\invite\me\GUI\createAtd$6.class
 com\mycompany\invite\me\GUI\mainFrame$3.class
 com\mycompany\invite\me\GUI\createEvt$2.class
+com\mycompany\invite\me\classes\workshop.class
 com\mycompany\invite\me\GUI\mainFrame$6.class
+com\mycompany\invite\me\classes\Venue.class
 com\mycompany\invite\me\GUI\mainFrame$11.class
 com\mycompany\invite\me\GUI\mainFrame.class
+com\mycompany\invite\me\GUI\createEvt$9.class
 com\mycompany\invite\me\GUI\createEvt$4.class
 com\mycompany\invite\me\GUI\mainFrame$16.class
+com\mycompany\invite\me\classes\event.class
 com\mycompany\invite\me\GUI\createAtd$4.class
 com\mycompany\invite\me\GUI\mainFrame$1.class
 com\mycompany\invite\me\GUI\createEvt$8.class
@@ -28,9 +32,10 @@ com\mycompany\invite\me\GUI\mainFrame$14.class
 com\mycompany\invite\me\GUI\createAtd$2.class
 com\mycompany\invite\me\InviteMe.class
 com\mycompany\invite\me\GUI\createEvt$5.class
+com\mycompany\invite\me\classes\seminar.class
 com\mycompany\invite\me\GUI\mainFrame$15.class
 com\mycompany\invite\me\GUI\mainFrame$5.class
-com\mycompany\invite\me\InviteMe$1.class
 com\mycompany\invite\me\GUI\createAtd$3.class
 com\mycompany\invite\me\GUI\mainFrame$10.class
 com\mycompany\invite\me\GUI\createAtd$5.class
+com\mycompany\invite\me\classes\conference.class
