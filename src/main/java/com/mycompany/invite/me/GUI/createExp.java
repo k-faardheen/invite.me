@@ -8,6 +8,7 @@ package com.mycompany.invite.me.GUI;
  *
  * @author Admin
  */
+import com.mycompany.invite.me.classes.expenses;
 public class createExp extends javax.swing.JFrame {
 
     /**
@@ -32,23 +33,25 @@ public class createExp extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        title = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        eventName = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        date = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        description = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         addExp = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        paidRadioBtn = new javax.swing.JRadioButton();
+        pendingRadioBtn = new javax.swing.JRadioButton();
+        failedRadioBtn = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
+        amount = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(450, 615));
@@ -67,11 +70,11 @@ public class createExp extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel2.setText("Title");
 
-        jTextField1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(252, 30));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        title.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        title.setPreferredSize(new java.awt.Dimension(252, 30));
+        title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                titleActionPerformed(evt);
             }
         });
 
@@ -83,7 +86,7 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap(63, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(26, 26, 26)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
         );
         jPanel2Layout.setVerticalGroup(
@@ -92,18 +95,18 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel5.setText("Event");
 
-        jTextField4.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jTextField4.setPreferredSize(new java.awt.Dimension(64, 30));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        eventName.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        eventName.setPreferredSize(new java.awt.Dimension(64, 30));
+        eventName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                eventNameActionPerformed(evt);
             }
         });
 
@@ -115,7 +118,7 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel7Layout.setVerticalGroup(
@@ -124,18 +127,18 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel6.setText("Date ");
 
-        jTextField5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jTextField5.setPreferredSize(new java.awt.Dimension(64, 30));
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        date.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        date.setPreferredSize(new java.awt.Dimension(64, 30));
+        date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                dateActionPerformed(evt);
             }
         });
 
@@ -147,7 +150,7 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel8Layout.setVerticalGroup(
@@ -156,18 +159,18 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel7.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jLabel7.setText("Amount");
+        jLabel9.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        jLabel9.setText("Description");
 
-        jTextField6.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jTextField6.setPreferredSize(new java.awt.Dimension(64, 30));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        description.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        description.setPreferredSize(new java.awt.Dimension(64, 30));
+        description.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                descriptionActionPerformed(evt);
             }
         });
 
@@ -177,19 +180,18 @@ public class createExp extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
+                .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
+                    .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         addExp.setBackground(new java.awt.Color(51, 51, 51));
@@ -220,27 +222,27 @@ public class createExp extends javax.swing.JFrame {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        jRadioButton2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jRadioButton2.setText("Paid");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        paidRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        paidRadioBtn.setText("Paid");
+        paidRadioBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                paidRadioBtnActionPerformed(evt);
             }
         });
 
-        jRadioButton3.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jRadioButton3.setText("Pending");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        pendingRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        pendingRadioBtn.setText("Pending");
+        pendingRadioBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                pendingRadioBtnActionPerformed(evt);
             }
         });
 
-        jRadioButton5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        jRadioButton5.setText("Failed");
-        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
+        failedRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        failedRadioBtn.setText("Failed");
+        failedRadioBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton5ActionPerformed(evt);
+                failedRadioBtnActionPerformed(evt);
             }
         });
 
@@ -255,11 +257,11 @@ public class createExp extends javax.swing.JFrame {
                 .addGap(97, 97, 97)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(paidRadioBtn)
                 .addGap(25, 25, 25)
-                .addComponent(jRadioButton3)
+                .addComponent(pendingRadioBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton5)
+                .addComponent(failedRadioBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -267,12 +269,23 @@ public class createExp extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
+                    .addComponent(paidRadioBtn)
+                    .addComponent(pendingRadioBtn)
                     .addComponent(jLabel8)
-                    .addComponent(jRadioButton5))
+                    .addComponent(failedRadioBtn))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
+
+        amount.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        amount.setPreferredSize(new java.awt.Dimension(64, 30));
+        amount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amountActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        jLabel7.setText("Amount");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -290,6 +303,12 @@ public class createExp extends javax.swing.JFrame {
                     .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(41, 41, 41))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,11 +322,15 @@ public class createExp extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel4);
@@ -328,48 +351,77 @@ public class createExp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void eventNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_eventNameActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_dateActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_amountActionPerformed
 
     private void addExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExpActionPerformed
         // TODO add your handling code here:
+        String name = eventName.getText(); 
+        String eventTitle = title.getText(); 
+        String eventDesc = description.getText();
+        double eventAmt = Double.parseDouble(amount.getText()); 
+        String eventDate = date.getText(); 
+        String status = ""; 
+        
+        if(paidRadioBtn.isSelected()) { 
+            status = "Paid"; 
+        }else if (pendingRadioBtn.isSelected()) { 
+            status = "Pending"; 
+        }else if (failedRadioBtn.isSelected()) { 
+            status = "Failed"; 
+        }
+        
+        expenses exp = new expenses(name, eventTitle, eventDesc, eventAmt, eventDate, status); 
+        exp.create();
+        this.dispose(); 
+        
     }//GEN-LAST:event_addExpActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_titleActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void paidRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paidRadioBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_paidRadioBtnActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void pendingRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendingRadioBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_pendingRadioBtnActionPerformed
 
-    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
+    private void failedRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failedRadioBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton5ActionPerformed
+    }//GEN-LAST:event_failedRadioBtnActionPerformed
+
+    private void descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_descriptionActionPerformed
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addExp;
+    private javax.swing.JTextField amount;
+    private javax.swing.JTextField date;
+    private javax.swing.JTextField description;
+    private javax.swing.JTextField eventName;
+    private javax.swing.JRadioButton failedRadioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
@@ -378,13 +430,9 @@ public class createExp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JRadioButton paidRadioBtn;
+    private javax.swing.JRadioButton pendingRadioBtn;
+    private javax.swing.JTextField title;
     // End of variables declaration//GEN-END:variables
 }
