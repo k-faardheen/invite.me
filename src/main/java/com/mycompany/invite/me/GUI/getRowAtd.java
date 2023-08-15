@@ -5,10 +5,6 @@
 package com.mycompany.invite.me.GUI;
 
 import com.mycompany.invite.me.InviteMe;
-import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
-import static com.mycompany.invite.me.classes.CRUD_interface.driver;
-import static com.mycompany.invite.me.classes.CRUD_interface.pwd;
-import static com.mycompany.invite.me.classes.CRUD_interface.user;
 import com.mycompany.invite.me.classes.attendee;
 import com.mycompany.invite.me.classes.event.workshop;
 import java.sql.Connection;
@@ -18,23 +14,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Admin
  */
-public class createAtd extends javax.swing.JFrame {
+public class getRowAtd extends javax.swing.JFrame {
 
     /**
-     * Creates new form createAtd
+     * Creates new form getRowatd
      */
-    public createAtd() {
+    
+    public String atdId;
+    public getRowAtd() {
         initComponents();
         fillCombo();
-         
     }
-public void fillCombo(){
-try {
+       public Connection connect() {
+
+        try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -47,11 +46,15 @@ try {
         } catch (SQLException ex) {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        return con;
+    }
+public void fillCombo(){
 
-            PreparedStatement ps = con.prepareStatement("select eventName from event");
+
+        try {
+          
+
+            PreparedStatement ps = connect().prepareStatement("select eventName from event");
             ResultSet rs = ps.executeQuery();
          
 
@@ -94,9 +97,10 @@ try {
         jLabel8 = new javax.swing.JLabel();
         eName = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
-        addEvt = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -105,7 +109,7 @@ try {
 
         jLabel1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Add New Attendee");
+        jLabel1.setText("View Attendee");
         jPanel5.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jLabel2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
@@ -263,14 +267,25 @@ try {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        addEvt.setBackground(new java.awt.Color(51, 51, 51));
-        addEvt.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        addEvt.setForeground(new java.awt.Color(255, 255, 255));
-        addEvt.setText("Add");
-        addEvt.setBorderPainted(false);
-        addEvt.addActionListener(new java.awt.event.ActionListener() {
+        update.setBackground(new java.awt.Color(51, 51, 51));
+        update.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        update.setForeground(new java.awt.Color(255, 255, 255));
+        update.setText("Update");
+        update.setBorderPainted(false);
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEvtActionPerformed(evt);
+                updateActionPerformed(evt);
+            }
+        });
+
+        delete.setBackground(new java.awt.Color(51, 51, 51));
+        delete.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        delete.setForeground(new java.awt.Color(255, 255, 255));
+        delete.setText("Delete");
+        delete.setBorderPainted(false);
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
             }
         });
 
@@ -279,16 +294,19 @@ try {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(addEvt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addEvt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 108, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -334,7 +352,7 @@ try {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,6 +363,10 @@ try {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fNameActionPerformed
 
     private void cntDtlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cntDtlActionPerformed
         // TODO add your handling code here:
@@ -358,32 +380,84 @@ try {
         // TODO add your handling code here:
     }//GEN-LAST:event_stsActionPerformed
 
-    private void addEvtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEvtActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:===========
         String name = fName.getText();
         String details = cntDtl.getText();
         String a_dob=dob.getText();
         String status = sts.getText();
         String eve_name = eName.getSelectedItem().toString();
-       
+
         attendee atd = new attendee(name, details, a_dob,eve_name,status );
-        atd.create();
+        atd.update(atdId);
         this.dispose();
-    }//GEN-LAST:event_addEvtActionPerformed
+    }//GEN-LAST:event_updateActionPerformed
 
-    private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fNameActionPerformed
+        
+         int res = JOptionPane.showConfirmDialog(this, "Do you wan to permanetly delete this record?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (res == JOptionPane.YES_OPTION) {
 
-   
-    
+            try {
+
+                PreparedStatement ps = connect().prepareStatement("DELETE from attendee where attendeeId=?");
+
+                ps.setString(1, atdId);
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Deleted sucessfully");
+                this.dispose();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_deleteActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(getRowAtd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(getRowAtd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(getRowAtd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(getRowAtd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new getRowAtd().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addEvt;
-    private javax.swing.JTextField cntDtl;
-    private javax.swing.JTextField dob;
-    private javax.swing.JComboBox<String> eName;
-    private javax.swing.JTextField fName;
+    public javax.swing.JTextField cntDtl;
+    private javax.swing.JButton delete;
+    public javax.swing.JTextField dob;
+    public javax.swing.JComboBox<String> eName;
+    public javax.swing.JTextField fName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -399,6 +473,7 @@ try {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField sts;
+    public javax.swing.JTextField sts;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
