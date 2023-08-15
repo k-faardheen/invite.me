@@ -4,26 +4,59 @@
  */
 package com.mycompany.invite.me.GUI;
 
+import com.mycompany.invite.me.InviteMe;
+import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
+import static com.mycompany.invite.me.classes.CRUD_interface.driver;
+import static com.mycompany.invite.me.classes.CRUD_interface.pwd;
+import static com.mycompany.invite.me.classes.CRUD_interface.user;
 import com.mycompany.invite.me.classes.Venue;
 import com.mycompany.invite.me.classes.conference;
 import com.mycompany.invite.me.classes.seminar;
 import com.mycompany.invite.me.classes.workshop;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Admin
  */
-public class createEvt extends javax.swing.JFrame {
+public class getRowEvent extends javax.swing.JFrame {
 
     /**
-     * Creates new form createEvt
+     * Creates new form getRowEvent
      */
-    public createEvt() {
+    public String eventId;
 
+    public getRowEvent() {
         initComponents();
-        seminarPanel.setVisible(false);
-        workshopPanel.setVisible(false);
-        conferencePanel.setVisible(false);
+    }
+
+    public Connection connect() {
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con;
     }
 
     /**
@@ -35,40 +68,41 @@ public class createEvt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        eventType = new javax.swing.ButtonGroup();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        eventName = new javax.swing.JTextField();
+        V_eventName = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        descriptionEvent = new javax.swing.JTextArea();
+        V_descriptionEvent = new javax.swing.JTextArea();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        eventDate = new javax.swing.JTextField();
+        V_eventDate = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        eventDays = new javax.swing.JTextField();
+        V_eventDays = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        eventVenue = new javax.swing.JTextField();
+        V_eventVenue = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        eventLocation = new javax.swing.JTextField();
+        V_eventLocation = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         seminar = new javax.swing.JRadioButton();
         workshop = new javax.swing.JRadioButton();
         conference = new javax.swing.JRadioButton();
         jPanel12 = new javax.swing.JPanel();
-        addEvt = new javax.swing.JButton();
+        updateEvent = new javax.swing.JButton();
+        delEvent = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        eventPrice = new javax.swing.JTextField();
+        V_eventPrice = new javax.swing.JTextField();
         workshopPanel = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -95,31 +129,32 @@ public class createEvt extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(500, 606));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(476, 925));
 
         jPanel5.setPreferredSize(new java.awt.Dimension(450, 204));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Create An Event");
+        jLabel1.setText("View Event");
         jPanel5.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jLabel2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel2.setText("Name");
 
-        eventName.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventName.setPreferredSize(new java.awt.Dimension(252, 30));
+        V_eventName.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventName.setPreferredSize(new java.awt.Dimension(252, 30));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(80, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(V_eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,17 +162,17 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel4.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel4.setText("Description");
 
-        descriptionEvent.setColumns(20);
-        descriptionEvent.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        descriptionEvent.setRows(5);
-        jScrollPane2.setViewportView(descriptionEvent);
+        V_descriptionEvent.setColumns(20);
+        V_descriptionEvent.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_descriptionEvent.setRows(5);
+        jScrollPane2.setViewportView(V_descriptionEvent);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -146,29 +181,29 @@ public class createEvt extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(68, 68, 68))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel5.setText("Date");
 
-        eventDate.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventDate.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventDate.addActionListener(new java.awt.event.ActionListener() {
+        V_eventDate.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventDate.setPreferredSize(new java.awt.Dimension(64, 30));
+        V_eventDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventDateActionPerformed(evt);
+                V_eventDateActionPerformed(evt);
             }
         });
 
@@ -180,7 +215,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(V_eventDate, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel7Layout.setVerticalGroup(
@@ -189,18 +224,18 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(eventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel6.setText("Durations(Days)");
 
-        eventDays.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventDays.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventDays.addActionListener(new java.awt.event.ActionListener() {
+        V_eventDays.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventDays.setPreferredSize(new java.awt.Dimension(64, 30));
+        V_eventDays.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventDaysActionPerformed(evt);
+                V_eventDaysActionPerformed(evt);
             }
         });
 
@@ -212,7 +247,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventDays, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(V_eventDays, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel8Layout.setVerticalGroup(
@@ -221,18 +256,18 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(eventDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel7.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel7.setText("Venue Name");
 
-        eventVenue.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventVenue.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventVenue.addActionListener(new java.awt.event.ActionListener() {
+        V_eventVenue.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventVenue.setPreferredSize(new java.awt.Dimension(64, 30));
+        V_eventVenue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventVenueActionPerformed(evt);
+                V_eventVenueActionPerformed(evt);
             }
         });
 
@@ -243,9 +278,9 @@ public class createEvt extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventVenue, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(V_eventVenue, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,18 +288,18 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(eventVenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventVenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel8.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel8.setText("Venue Location");
 
-        eventLocation.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventLocation.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventLocation.addActionListener(new java.awt.event.ActionListener() {
+        V_eventLocation.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventLocation.setPreferredSize(new java.awt.Dimension(64, 30));
+        V_eventLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventLocationActionPerformed(evt);
+                V_eventLocationActionPerformed(evt);
             }
         });
 
@@ -276,7 +311,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(V_eventLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel10Layout.setVerticalGroup(
@@ -285,14 +320,14 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(eventLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel9.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel9.setText("Type");
 
-        eventType.add(seminar);
+        buttonGroup1.add(seminar);
         seminar.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         seminar.setText("Seminar");
         seminar.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +336,7 @@ public class createEvt extends javax.swing.JFrame {
             }
         });
 
-        eventType.add(workshop);
+        buttonGroup1.add(workshop);
         workshop.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         workshop.setText("Workshop");
         workshop.addActionListener(new java.awt.event.ActionListener() {
@@ -310,7 +345,7 @@ public class createEvt extends javax.swing.JFrame {
             }
         });
 
-        eventType.add(conference);
+        buttonGroup1.add(conference);
         conference.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         conference.setText("Conference");
         conference.addActionListener(new java.awt.event.ActionListener() {
@@ -332,33 +367,48 @@ public class createEvt extends javax.swing.JFrame {
                 .addComponent(workshop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(conference)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(seminar)
                     .addComponent(workshop)
-                    .addComponent(conference))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(conference)))
         );
 
-        addEvt.setBackground(new java.awt.Color(51, 51, 51));
-        addEvt.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        addEvt.setForeground(new java.awt.Color(255, 255, 255));
-        addEvt.setText("Add");
-        addEvt.setBorderPainted(false);
-        addEvt.addMouseListener(new java.awt.event.MouseAdapter() {
+        updateEvent.setBackground(new java.awt.Color(51, 51, 51));
+        updateEvent.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        updateEvent.setForeground(new java.awt.Color(255, 255, 255));
+        updateEvent.setText("Update");
+        updateEvent.setBorderPainted(false);
+        updateEvent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addEvtMouseClicked(evt);
+                updateEventMouseClicked(evt);
             }
         });
-        addEvt.addActionListener(new java.awt.event.ActionListener() {
+        updateEvent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEvtActionPerformed(evt);
+                updateEventActionPerformed(evt);
+            }
+        });
+
+        delEvent.setBackground(new java.awt.Color(51, 51, 51));
+        delEvent.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        delEvent.setForeground(new java.awt.Color(255, 255, 255));
+        delEvent.setText("Delete");
+        delEvent.setBorderPainted(false);
+        delEvent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delEventMouseClicked(evt);
+            }
+        });
+        delEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delEventActionPerformed(evt);
             }
         });
 
@@ -367,26 +417,30 @@ public class createEvt extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(addEvt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(updateEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(delEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addEvt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel10.setText("Price");
 
-        eventPrice.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventPrice.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventPrice.addActionListener(new java.awt.event.ActionListener() {
+        V_eventPrice.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        V_eventPrice.setPreferredSize(new java.awt.Dimension(64, 30));
+        V_eventPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventPriceActionPerformed(evt);
+                V_eventPriceActionPerformed(evt);
             }
         });
 
@@ -398,7 +452,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(V_eventPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
         jPanel13Layout.setVerticalGroup(
@@ -407,7 +461,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(eventPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(V_eventPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -506,27 +560,6 @@ public class createEvt extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(speaker, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(speaker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jLabel12.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jLabel12.setText("Topic");
 
@@ -545,9 +578,9 @@ public class createEvt extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(topic, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addGap(37, 37, 37))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,24 +592,46 @@ public class createEvt extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(speaker, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(speaker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout seminarPanelLayout = new javax.swing.GroupLayout(seminarPanel);
         seminarPanel.setLayout(seminarPanelLayout);
         seminarPanelLayout.setHorizontalGroup(
             seminarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seminarPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(seminarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
         );
         seminarPanelLayout.setVerticalGroup(
             seminarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(seminarPanelLayout.createSequentialGroup()
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel15.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
@@ -666,31 +721,35 @@ public class createEvt extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(conferencePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(seminarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(workshopPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                                .addGap(13, 13, 13)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(seminarPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(workshopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(conferencePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,7 +771,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(conferencePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(seminarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -720,7 +779,7 @@ public class createEvt extends javax.swing.JFrame {
                 .addComponent(workshopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         jScrollPane1.setViewportView(jPanel4);
@@ -729,110 +788,113 @@ public class createEvt extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addGap(0, 508, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 847, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 847, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void eventDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventDateActionPerformed
+    private void V_eventDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_eventDateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eventDateActionPerformed
+    }//GEN-LAST:event_V_eventDateActionPerformed
 
-    private void eventDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventDaysActionPerformed
+    private void V_eventDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_eventDaysActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eventDaysActionPerformed
+    }//GEN-LAST:event_V_eventDaysActionPerformed
 
-    private void eventVenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventVenueActionPerformed
+    private void V_eventVenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_eventVenueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eventVenueActionPerformed
+    }//GEN-LAST:event_V_eventVenueActionPerformed
 
-    private void eventLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventLocationActionPerformed
+    private void V_eventLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_eventLocationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eventLocationActionPerformed
+    }//GEN-LAST:event_V_eventLocationActionPerformed
 
     private void seminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seminarActionPerformed
         // TODO add your handling code here:
-        seminarPanel.setVisible(true);
-        workshopPanel.setVisible(false);
-        conferencePanel.setVisible(false);
     }//GEN-LAST:event_seminarActionPerformed
 
     private void workshopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workshopActionPerformed
         // TODO add your handling code here:
-        seminarPanel.setVisible(false);
-        workshopPanel.setVisible(true);
-        conferencePanel.setVisible(false);
     }//GEN-LAST:event_workshopActionPerformed
 
     private void conferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conferenceActionPerformed
         // TODO add your handling code here:
-        seminarPanel.setVisible(false);
-        workshopPanel.setVisible(false);
-        conferencePanel.setVisible(true);
+
     }//GEN-LAST:event_conferenceActionPerformed
 
-    private void addEvtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEvtActionPerformed
-        // TODO add your handling code here:
-        String eName = eventName.getText();
-        String desc = descriptionEvent.getText();
-        String date = eventDate.getText();
-        String days = eventDays.getText();
-        String vName = eventVenue.getText();
-        String vlocation = eventLocation.getText();
-        String price = eventPrice.getText();
+    private void updateEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateEventActionPerformed
+        // TODO add your handling code here:-----------------------------
+        Venue vnu = new Venue(V_eventVenue.getText(), V_eventLocation.getText());
         String type = "";
-
-        Venue vnu = new Venue(vName, vlocation);
-
         if (seminar.isSelected() == true) {
             type = "seminar";
-            String event_speaker = speaker.getText();
-            String ev_topic = topic.getText();
-            seminar sm = new seminar(eName, desc, date, days, price, vnu, event_speaker, ev_topic);
-            sm.create();
+            seminar sm = new seminar(V_eventName.getText(), V_descriptionEvent.getText(), V_eventDate.getText(), V_eventDays.getText(), V_eventPrice.getText(), vnu, speaker.getText(), topic.getText());
+            sm.update(eventId);
             this.dispose();
-            
-            
         } else if (workshop.isSelected() == true) {
             type = "workshop";
-            String event_inst = inst.getText();
-            String ev_material = material.getText();
-            workshop ws = new workshop(eName, desc, date, days, price, vnu, event_inst, ev_material);
-            ws.create();
+            workshop ws = new workshop(V_eventName.getText(), V_descriptionEvent.getText(), V_eventDate.getText(), V_eventDays.getText(), V_eventPrice.getText(), vnu, inst.getText(), material.getText());
+            ws.update(eventId);
             this.dispose();
-//           
         } else if (conference.isSelected() == true) {
             type = "conference";
-            String event_spkcnf = speakerConf.getText();
-            String event_spons = spons.getText();
-            conference con = new conference(event_spkcnf,event_spons,eName, desc, date, days, price, vnu);
-            con.create();
+            conference con = new conference(speakerConf.getText(), spons.getText(), V_eventName.getText(), V_descriptionEvent.getText(), V_eventDate.getText(), V_eventDays.getText(), V_eventPrice.getText(), vnu);
+            con.update(eventId);
             this.dispose();
         }
 
 
-    }//GEN-LAST:event_addEvtActionPerformed
+    }//GEN-LAST:event_updateEventActionPerformed
 
-    private void eventPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventPriceActionPerformed
+    private void V_eventPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_V_eventPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eventPriceActionPerformed
+    }//GEN-LAST:event_V_eventPriceActionPerformed
 
-    private void addEvtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEvtMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addEvtMouseClicked
+    private void delEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delEventActionPerformed
+        // TODO add your handling code here:--------------------------------
+        int res = JOptionPane.showConfirmDialog(this, "Do you wan to permanetly delete this record?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (res == JOptionPane.YES_OPTION) {
 
-    private void speakerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speakerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_speakerActionPerformed
+            try {
 
-    private void topicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topicActionPerformed
+                PreparedStatement ps = connect().prepareStatement("DELETE from event where eventId=?");
+
+                ps.setString(1, eventId);
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Deleted sucessfully");
+                this.dispose();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+
+    }//GEN-LAST:event_delEventActionPerformed
+
+    private void updateEventMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateEventMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_topicActionPerformed
+
+    }//GEN-LAST:event_updateEventMouseClicked
+
+    private void delEventMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delEventMouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_delEventMouseClicked
 
     private void instActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instActionPerformed
         // TODO add your handling code here:
@@ -841,6 +903,14 @@ public class createEvt extends javax.swing.JFrame {
     private void materialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_materialActionPerformed
+
+    private void speakerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speakerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_speakerActionPerformed
+
+    private void topicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topicActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_topicActionPerformed
 
     private void speakerConfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_speakerConfActionPerformed
         // TODO add your handling code here:
@@ -853,20 +923,51 @@ public class createEvt extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(getRowEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(getRowEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(getRowEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(getRowEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new getRowEvent().setVisible(true);
+//            }
+//        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addEvt;
-    private javax.swing.JRadioButton conference;
-    private javax.swing.JPanel conferencePanel;
-    private javax.swing.JTextArea descriptionEvent;
-    private javax.swing.JTextField eventDate;
-    private javax.swing.JTextField eventDays;
-    private javax.swing.JTextField eventLocation;
-    private javax.swing.JTextField eventName;
-    private javax.swing.JTextField eventPrice;
-    private javax.swing.ButtonGroup eventType;
-    private javax.swing.JTextField eventVenue;
-    private javax.swing.JTextField inst;
+    public javax.swing.JTextArea V_descriptionEvent;
+    public javax.swing.JTextField V_eventDate;
+    public javax.swing.JTextField V_eventDays;
+    public javax.swing.JTextField V_eventLocation;
+    public javax.swing.JTextField V_eventName;
+    public javax.swing.JTextField V_eventPrice;
+    public javax.swing.JTextField V_eventVenue;
+    private javax.swing.ButtonGroup buttonGroup1;
+    public javax.swing.JRadioButton conference;
+    public javax.swing.JPanel conferencePanel;
+    private javax.swing.JButton delEvent;
+    public javax.swing.JTextField inst;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -902,13 +1003,14 @@ public class createEvt extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField material;
-    private javax.swing.JRadioButton seminar;
-    private javax.swing.JPanel seminarPanel;
-    private javax.swing.JTextField speaker;
-    private javax.swing.JTextField speakerConf;
+    public javax.swing.JRadioButton seminar;
+    public javax.swing.JPanel seminarPanel;
+    public javax.swing.JTextField speaker;
+    public javax.swing.JTextField speakerConf;
     private javax.swing.JTextField spons;
     private javax.swing.JTextField topic;
-    private javax.swing.JRadioButton workshop;
-    private javax.swing.JPanel workshopPanel;
+    private javax.swing.JButton updateEvent;
+    public javax.swing.JRadioButton workshop;
+    public javax.swing.JPanel workshopPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.invite.me.GUI;
+package com.mycompany.invite.me.classes;
 
 
 import java.util.logging.Level;
@@ -18,7 +18,10 @@ public interface CRUD_interface {
     static final String DB_URL = "jdbc:mysql://localhost:3306/invite.me";
     static final String user = "root";
     static final String pwd = "";
-   //public void connect(){};
     
+   public Connection connect();
+    public void create();
+    public void update(String id);
+//    public void delete(int id);
     
 }

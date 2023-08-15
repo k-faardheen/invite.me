@@ -4,6 +4,23 @@
  */
 package com.mycompany.invite.me.GUI;
 
+import com.mycompany.invite.me.InviteMe;
+import com.mycompany.invite.me.classes.workshop;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Admin
@@ -14,7 +31,65 @@ public class mainFrame extends javax.swing.JFrame {
      * Creates new form mainFrame
      */
     public mainFrame() {
+
         initComponents();
+        initTables();
+        fetchEventTable();
+
+    }
+    getRowEvent eventRow = new getRowEvent();
+
+    public void initTables() {
+        JTable table1 = jTable1;
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table1.setDefaultRenderer(String.class, centerRenderer);
+
+    }
+
+    public void fetchEventTable() {
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+
+            PreparedStatement ps = con.prepareStatement("select * from event");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int n = rsmd.getColumnCount();
+            DefaultTableModel table1 = (DefaultTableModel) jTable1.getModel();
+
+            table1.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                for (int i = 1; i <= n; i++) {
+                    v.add(rs.getString("eventId"));
+                    v.add(rs.getString("eventName"));
+                    v.add(rs.getString("description"));
+                    v.add(rs.getString("date"));
+                    v.add(rs.getString("duration"));
+                    v.add(rs.getString("price"));
+                    v.add(rs.getString("venue"));
+                    v.add(rs.getString("type"));
+                    v.add(rs.getString("speaker"));
+
+                }
+
+                table1.addRow(v);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -39,12 +114,14 @@ public class mainFrame extends javax.swing.JFrame {
         eventPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         crtEvtBtn = new javax.swing.JButton();
+        refreshEvtTable = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         attendeePanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         crtAtd = new javax.swing.JButton();
+        refresh = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -68,6 +145,7 @@ public class mainFrame extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1500, 800));
 
         sidePanel.setBackground(new java.awt.Color(217, 217, 217));
         sidePanel.setPreferredSize(new java.awt.Dimension(300, 800));
@@ -223,12 +301,27 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        refreshEvtTable.setBackground(new java.awt.Color(51, 51, 51));
+        refreshEvtTable.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        refreshEvtTable.setForeground(new java.awt.Color(255, 255, 255));
+        refreshEvtTable.setText("Refresh");
+        refreshEvtTable.setBorder(null);
+        refreshEvtTable.setBorderPainted(false);
+        refreshEvtTable.setFocusPainted(false);
+        refreshEvtTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshEvtTableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(1166, Short.MAX_VALUE)
+                .addGap(291, 291, 291)
+                .addComponent(refreshEvtTable, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(crtEvtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
@@ -236,30 +329,32 @@ public class mainFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(crtEvtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crtEvtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshEvtTable, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jScrollPane1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Event Id", "Event Name", "Description", "Date", "Duration(days)", "Price", "Venue", "Type"
+                "Event Id", "Event Name", "Description", "Date", "Duration(days)", "Price", "Venue", "Type", "speaker"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -270,9 +365,21 @@ public class mainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setRowHeight(40);
         jTable1.setShowGrid(false);
+        jTable1.setShowHorizontalLines(true);
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTable1PropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -280,7 +387,7 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(312, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -295,7 +402,7 @@ public class mainFrame extends javax.swing.JFrame {
         eventPanel.setLayout(eventPanelLayout);
         eventPanelLayout.setHorizontalGroup(
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         eventPanelLayout.setVerticalGroup(
@@ -326,12 +433,24 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        refresh.setBackground(new java.awt.Color(51, 51, 51));
+        refresh.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        refresh.setText("Refresh");
+        refresh.setBorder(null);
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(322, 322, 322)
+                .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(crtAtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
@@ -339,7 +458,9 @@ public class mainFrame extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(crtAtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crtAtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -398,7 +519,7 @@ public class mainFrame extends javax.swing.JFrame {
         attendeePanel.setLayout(attendeePanelLayout);
         attendeePanelLayout.setHorizontalGroup(
             attendeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         attendeePanelLayout.setVerticalGroup(
@@ -501,7 +622,7 @@ public class mainFrame extends javax.swing.JFrame {
         RevenuePanel.setLayout(RevenuePanelLayout);
         RevenuePanelLayout.setHorizontalGroup(
             RevenuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         RevenuePanelLayout.setVerticalGroup(
@@ -589,7 +710,7 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(312, Short.MAX_VALUE)
+                .addContainerGap(360, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -597,14 +718,14 @@ public class mainFrame extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 224, Short.MAX_VALUE))
+                .addGap(0, 105, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout ExpensePanelLayout = new javax.swing.GroupLayout(ExpensePanel);
         ExpensePanel.setLayout(ExpensePanelLayout);
         ExpensePanelLayout.setHorizontalGroup(
             ExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ExpensePanelLayout.setVerticalGroup(
@@ -707,7 +828,7 @@ public class mainFrame extends javax.swing.JFrame {
         ReportPanel.setLayout(ReportPanelLayout);
         ReportPanelLayout.setHorizontalGroup(
             ReportPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1451, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1452, Short.MAX_VALUE)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ReportPanelLayout.setVerticalGroup(
@@ -794,8 +915,8 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_crtRevActionPerformed
 
     private void crtExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crtExpActionPerformed
-    
- java.awt.EventQueue.invokeLater(new Runnable() {
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new createExp().setVisible(true);
             }
@@ -806,40 +927,79 @@ public class mainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_genReportActionPerformed
 
+    private void jTable1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable1PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1PropertyChange
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+
+        int index = jTable1.getSelectedRow();
+        TableModel model = jTable1.getModel();
+        String id = model.getValueAt(index, 0).toString();
+        String eventName = model.getValueAt(index, 1).toString();
+        String desc = model.getValueAt(index, 2).toString();
+        String date = model.getValueAt(index, 3).toString();
+        String duration = model.getValueAt(index, 4).toString();
+        String price = model.getValueAt(index, 5).toString();
+        String vName = model.getValueAt(index, 6).toString();
+        String type = model.getValueAt(index, 7).toString();
+        String eventSpeaker = model.getValueAt(index, 8).toString();
+//        String vLocation = model.getValueAt(index, 6).toString();
+
+        eventRow.setVisible(true);
+        eventRow.pack();
+        eventRow.setLocationRelativeTo(null);
+
+        eventRow.eventId = id;
+        eventRow.V_eventName.setText(eventName);
+        eventRow.V_descriptionEvent.setText(desc);
+        eventRow.V_eventDate.setText(date);
+        eventRow.V_eventDays.setText(duration);
+        eventRow.V_eventVenue.setText(vName);
+        //eventRow.V_eventLocation.setText(vLocation);
+        eventRow.V_eventPrice.setText(price);
+
+        //System.out.println(type);
+        if (type.equals("workshop")) {
+
+            eventRow.workshop.setSelected(true);
+
+            eventRow.seminarPanel.setVisible(false);
+            eventRow.workshopPanel.setVisible(true);
+            eventRow.conferencePanel.setVisible(false);
+            eventRow.inst.setText(eventSpeaker);
+
+        } else if (type.equals("seminar")) {
+            eventRow.seminar.setSelected(true);
+
+            eventRow.seminarPanel.setVisible(true);
+            eventRow.workshopPanel.setVisible(false);
+            eventRow.conferencePanel.setVisible(false);
+            eventRow.speaker.setText(eventSpeaker);
+        } else if (type.equals("Conference")) {
+            eventRow.conference.setSelected(true);
+
+            eventRow.seminarPanel.setVisible(false);
+            eventRow.workshopPanel.setVisible(false);
+            eventRow.conferencePanel.setVisible(true);
+            eventRow.speakerConf.setText(eventSpeaker);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        // TODO add your handling code here:
+        //fetchEventTable();
+    }//GEN-LAST:event_refreshActionPerformed
+
+    private void refreshEvtTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshEvtTableActionPerformed
+        // TODO add your handling code here:
+        fetchEventTable();
+    }//GEN-LAST:event_refreshEvtTableActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new mainFrame().setVisible(true);
-//            }
-//        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ExpensePanel;
@@ -874,13 +1034,16 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
+    private javax.swing.JButton refresh;
+    private javax.swing.JButton refreshEvtTable;
     private javax.swing.JButton repBtn;
     private javax.swing.JButton revBtn;
     private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -15,28 +15,23 @@ import java.sql.DriverManager;
  */
 public class InviteMe {
 
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args) throws SQLException {
 
-    
-        try {
-            //
-// java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new mainFrame().setVisible(true);
-//            }
-//        });
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-
-        
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
-                System.out.println(con);
+       // try {
             
-             
-        
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new mainFrame().setVisible(true);
+                }
+            });
+
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+//        System.out.println(con);
+
     }
 }
