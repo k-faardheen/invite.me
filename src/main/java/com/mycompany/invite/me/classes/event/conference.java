@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.invite.me.classes;
+package com.mycompany.invite.me.classes.event;
 
 import com.mycompany.invite.me.InviteMe;
+import com.mycompany.invite.me.classes.CRUD_interface;
 import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
 import static com.mycompany.invite.me.classes.CRUD_interface.driver;
 import static com.mycompany.invite.me.classes.CRUD_interface.pwd;

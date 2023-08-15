@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.invite.me.GUI;
+package com.mycompany.invite.me.GUI.event;
 
-import com.mycompany.invite.me.classes.Venue;
-import com.mycompany.invite.me.classes.conference;
-import com.mycompany.invite.me.classes.seminar;
-import com.mycompany.invite.me.classes.workshop;
+import com.mycompany.invite.me.classes.event.Venue;
+import com.mycompany.invite.me.classes.event.conference;
+import com.mycompany.invite.me.classes.event.seminar;
+import com.mycompany.invite.me.classes.event.workshop;
 
 /**
  *
@@ -92,7 +92,6 @@ public class createEvt extends javax.swing.JFrame {
         spons = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 606));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 

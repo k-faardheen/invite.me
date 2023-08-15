@@ -4,8 +4,10 @@
  */
 package com.mycompany.invite.me.GUI;
 
+import com.mycompany.invite.me.GUI.event.getRowEvent;
+import com.mycompany.invite.me.GUI.event.createEvt;
 import com.mycompany.invite.me.InviteMe;
-import com.mycompany.invite.me.classes.workshop;
+import com.mycompany.invite.me.classes.event.workshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -121,7 +123,7 @@ public class mainFrame extends javax.swing.JFrame {
         attendeePanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         crtAtd = new javax.swing.JButton();
-        refresh = new javax.swing.JButton();
+        refreshAtdTable = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -145,7 +147,6 @@ public class mainFrame extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1500, 800));
 
         sidePanel.setBackground(new java.awt.Color(217, 217, 217));
         sidePanel.setPreferredSize(new java.awt.Dimension(300, 800));
@@ -319,7 +320,7 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(291, 291, 291)
+                .addGap(311, 311, 311)
                 .addComponent(refreshEvtTable, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(crtEvtBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -433,13 +434,15 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
-        refresh.setBackground(new java.awt.Color(51, 51, 51));
-        refresh.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        refresh.setText("Refresh");
-        refresh.setBorder(null);
-        refresh.addActionListener(new java.awt.event.ActionListener() {
+        refreshAtdTable.setBackground(new java.awt.Color(51, 51, 51));
+        refreshAtdTable.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        refreshAtdTable.setForeground(new java.awt.Color(255, 255, 255));
+        refreshAtdTable.setText("Refresh");
+        refreshAtdTable.setBorder(null);
+        refreshAtdTable.setFocusable(false);
+        refreshAtdTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
+                refreshAtdTableActionPerformed(evt);
             }
         });
 
@@ -448,8 +451,8 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(322, 322, 322)
-                .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(310, 310, 310)
+                .addComponent(refreshAtdTable, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(crtAtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
@@ -460,7 +463,7 @@ public class mainFrame extends javax.swing.JFrame {
                 .addContainerGap(61, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(crtAtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(refreshAtdTable, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -987,10 +990,10 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+    private void refreshAtdTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAtdTableActionPerformed
         // TODO add your handling code here:
         //fetchEventTable();
-    }//GEN-LAST:event_refreshActionPerformed
+    }//GEN-LAST:event_refreshAtdTableActionPerformed
 
     private void refreshEvtTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshEvtTableActionPerformed
         // TODO add your handling code here:
@@ -1039,7 +1042,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
-    private javax.swing.JButton refresh;
+    private javax.swing.JButton refreshAtdTable;
     private javax.swing.JButton refreshEvtTable;
     private javax.swing.JButton repBtn;
     private javax.swing.JButton revBtn;
