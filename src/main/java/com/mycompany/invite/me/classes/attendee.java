@@ -12,9 +12,11 @@ import static com.mycompany.invite.me.classes.CRUD_interface.user;
 import com.mycompany.invite.me.classes.event.workshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -98,11 +100,46 @@ public class attendee implements CRUD_interface{
     @Override
     public void create() {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+     try {
+            PreparedStatement ps = connect().prepareStatement("insert into attendee(fullName, contactDetails, dob, eventName, status)values(?,?,?,?,?)");
+            ps.setString(1, getName());
+            ps.setString(2, getContDetails());
+            ps.setString(3, getDob());
+            ps.setString(4, getEventName());
+            ps.setString(5, getStatus());
+        
+            ps.executeUpdate();
+            //System.out.println("Inserted sucessfully");
+            JOptionPane.showMessageDialog(null, "Inserted sucessfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    
     }
 
     @Override
     public void update(String id) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+            PreparedStatement ps = connect().prepareStatement("UPDATE attendee set fullName=?, contactDetails=?, dob=?, eventName=?, status=? where attendeeId=?");
+            ps.setString(1, getName());
+            ps.setString(2, getContDetails());
+            ps.setString(3, getDob());
+            ps.setString(4, getEventName());
+            ps.setString(5, getStatus());
+            ps.setString(6, id);
+
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Updated sucessfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
     }
     
     

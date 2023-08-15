@@ -37,20 +37,13 @@ public class mainFrame extends javax.swing.JFrame {
         initComponents();
         initTables();
         fetchEventTable();
+        fetchAtdTable();
 
     }
     getRowEvent eventRow = new getRowEvent();
+    getRowAtd atdRow = new getRowAtd();
+    public Connection connect() {
 
-    public void initTables() {
-        JTable table1 = jTable1;
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        table1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        table1.setDefaultRenderer(String.class, centerRenderer);
-
-    }
-
-    public void fetchEventTable() {
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -61,8 +54,29 @@ public class mainFrame extends javax.swing.JFrame {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con;
+    }
 
-            PreparedStatement ps = con.prepareStatement("select * from event");
+    public void initTables() {
+        JTable table1 = jTable1;
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table1.setDefaultRenderer(String.class, centerRenderer);
+
+        JTable table2 = jTable2;
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table2.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table2.setDefaultRenderer(String.class, centerRenderer);
+    }
+
+    public void fetchEventTable() {
+
+        try {
+            PreparedStatement ps = connect().prepareStatement("select * from event");
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int n = rsmd.getColumnCount();
@@ -82,6 +96,38 @@ public class mainFrame extends javax.swing.JFrame {
                     v.add(rs.getString("venue"));
                     v.add(rs.getString("type"));
                     v.add(rs.getString("speaker"));
+
+                }
+
+                table1.addRow(v);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void fetchAtdTable() {
+        try {
+            PreparedStatement ps = connect().prepareStatement("select * from attendee");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int n = rsmd.getColumnCount();
+            DefaultTableModel table1 = (DefaultTableModel) jTable2.getModel();
+
+            table1.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                for (int i = 1; i <= n; i++) {
+                    v.add(rs.getString("attendeeId"));
+                    v.add(rs.getString("fullName"));
+                    v.add(rs.getString("contactDetails"));
+                    v.add(rs.getString("dob"));
+                    v.add(rs.getString("eventName"));
+                    v.add(rs.getString("status"));
+                  
 
                 }
 
@@ -469,7 +515,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         jScrollPane2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
 
-        jTable2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
+        jTable2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -497,9 +543,16 @@ public class mainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setRowHeight(40);
         jTable2.setShowGrid(false);
+        jTable2.setShowHorizontalLines(true);
         jTable2.getTableHeader().setResizingAllowed(false);
         jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -992,13 +1045,45 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void refreshAtdTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAtdTableActionPerformed
         // TODO add your handling code here:
-        //fetchEventTable();
+        fetchAtdTable();
     }//GEN-LAST:event_refreshAtdTableActionPerformed
 
     private void refreshEvtTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshEvtTableActionPerformed
         // TODO add your handling code here:
         fetchEventTable();
     }//GEN-LAST:event_refreshEvtTableActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        
+        
+        
+        
+        int index = jTable2.getSelectedRow();
+        TableModel model = jTable2.getModel();
+        String id = model.getValueAt(index, 0).toString();
+        String Name = model.getValueAt(index, 1).toString();
+        String details = model.getValueAt(index, 2).toString();
+        String date = model.getValueAt(index, 3).toString();
+        String event = model.getValueAt(index, 4).toString();
+        String status = model.getValueAt(index, 5).toString();
+       
+
+        atdRow.setVisible(true);
+        atdRow.pack();
+        atdRow.setLocationRelativeTo(null);
+
+        atdRow.atdId = id;
+        atdRow.fName.setText(Name);
+        atdRow.cntDtl.setText(details);
+        atdRow.dob.setText(date);
+        atdRow.sts.setText(status);
+        atdRow.eName.setSelectedItem(event);
+       
+
+        //System.out.println(type);
+        
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments
