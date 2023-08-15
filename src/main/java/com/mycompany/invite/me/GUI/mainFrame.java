@@ -38,10 +38,13 @@ public class mainFrame extends javax.swing.JFrame {
         initTables();
         fetchEventTable();
         fetchAtdTable();
-
+        fetchRevTable();
+        fetchExpTable();
     }
     getRowEvent eventRow = new getRowEvent();
     getRowAtd atdRow = new getRowAtd();
+    getRowExp expRow = new getRowExp();
+
     public Connection connect() {
 
         try {
@@ -71,6 +74,16 @@ public class mainFrame extends javax.swing.JFrame {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table2.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         table2.setDefaultRenderer(String.class, centerRenderer);
+
+        JTable table3 = jTable3;
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table3.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table3.setDefaultRenderer(String.class, centerRenderer);
+
+        JTable table4 = jTable4;
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table4.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table4.setDefaultRenderer(String.class, centerRenderer);
     }
 
     public void fetchEventTable() {
@@ -108,6 +121,36 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }
 
+    public void fetchRevTable() {
+        try {
+            PreparedStatement ps = connect().prepareStatement("SELECT event.eventName, COUNT(attendee.fullName) AS attendees,event.date, event.price AS total_price FROM event JOIN attendee ON event.eventName = attendee.eventName GROUP BY event.eventName;");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int n = rsmd.getColumnCount();
+            DefaultTableModel table1 = (DefaultTableModel) jTable3.getModel();
+
+            table1.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                for (int i = 1; i <= n; i++) {
+                    v.add(rs.getString("eventName"));
+                    v.add(rs.getString("total_price"));
+                    v.add(rs.getString("date"));
+                    v.add(rs.getString("attendees"));
+
+                }
+
+                table1.addRow(v);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public void fetchAtdTable() {
         try {
             PreparedStatement ps = connect().prepareStatement("select * from attendee");
@@ -127,7 +170,6 @@ public class mainFrame extends javax.swing.JFrame {
                     v.add(rs.getString("dob"));
                     v.add(rs.getString("eventName"));
                     v.add(rs.getString("status"));
-                  
 
                 }
 
@@ -138,6 +180,39 @@ public class mainFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void fetchExpTable() {
+        try {
+            PreparedStatement ps = connect().prepareStatement("select * from expenses");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int n = rsmd.getColumnCount();
+            DefaultTableModel table1 = (DefaultTableModel) jTable4.getModel();
+
+            table1.setRowCount(0);
+
+            while (rs.next()) {
+                Vector v = new Vector();
+                for (int i = 1; i <= n; i++) {
+                    v.add(rs.getString("expenseId"));
+                    v.add(rs.getString("eventName"));
+                    v.add(rs.getString("title"));
+                    v.add(rs.getString("description"));
+                    v.add(rs.getString("amount"));
+                    v.add(rs.getString("date"));
+                    v.add(rs.getString("status"));
+
+                }
+
+                table1.addRow(v);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -175,13 +250,14 @@ public class mainFrame extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         RevenuePanel = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        crtRev = new javax.swing.JButton();
+        refreshAtdTable1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         ExpensePanel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         crtExp = new javax.swing.JButton();
+        refreshExpTable = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -593,16 +669,15 @@ public class mainFrame extends javax.swing.JFrame {
 
         jPanel7.setPreferredSize(new java.awt.Dimension(1500, 102));
 
-        crtRev.setBackground(new java.awt.Color(51, 51, 51));
-        crtRev.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        crtRev.setForeground(new java.awt.Color(255, 255, 255));
-        crtRev.setText("Add Revenue");
-        crtRev.setBorderPainted(false);
-        crtRev.setFocusable(false);
-        crtRev.setPreferredSize(new java.awt.Dimension(200, 35));
-        crtRev.addActionListener(new java.awt.event.ActionListener() {
+        refreshAtdTable1.setBackground(new java.awt.Color(51, 51, 51));
+        refreshAtdTable1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        refreshAtdTable1.setForeground(new java.awt.Color(255, 255, 255));
+        refreshAtdTable1.setText("Refresh");
+        refreshAtdTable1.setBorder(null);
+        refreshAtdTable1.setFocusable(false);
+        refreshAtdTable1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crtRevActionPerformed(evt);
+                refreshAtdTable1ActionPerformed(evt);
             }
         });
 
@@ -610,39 +685,39 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(crtRev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(306, 306, 306)
+                .addComponent(refreshAtdTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(crtRev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(refreshAtdTable1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jScrollPane3.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
 
-        jTable3.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
+        jTable3.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Revenue Id", "Event Name", "Title", "Description", "Amount", "Date"
+                "Event Name", "Price", "From Date", "Number of Attendees"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -653,9 +728,16 @@ public class mainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable3.setRowHeight(40);
         jTable3.setShowGrid(false);
+        jTable3.setShowHorizontalLines(true);
         jTable3.getTableHeader().setResizingAllowed(false);
         jTable3.getTableHeader().setReorderingAllowed(false);
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -709,12 +791,26 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        refreshExpTable.setBackground(new java.awt.Color(51, 51, 51));
+        refreshExpTable.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        refreshExpTable.setForeground(new java.awt.Color(255, 255, 255));
+        refreshExpTable.setText("Refresh");
+        refreshExpTable.setBorder(null);
+        refreshExpTable.setFocusable(false);
+        refreshExpTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshExpTableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(301, 301, 301)
+                .addComponent(refreshExpTable, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(crtExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
@@ -722,13 +818,15 @@ public class mainFrame extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(crtExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crtExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refreshExpTable, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jScrollPane4.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
 
-        jTable4.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
+        jTable4.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -756,9 +854,16 @@ public class mainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable4.setRowHeight(40);
         jTable4.setShowGrid(false);
+        jTable4.setShowHorizontalLines(true);
         jTable4.getTableHeader().setResizingAllowed(false);
         jTable4.getTableHeader().setReorderingAllowed(false);
+        jTable4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable4MouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTable4);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -766,7 +871,7 @@ public class mainFrame extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(360, Short.MAX_VALUE)
+                .addContainerGap(312, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -774,7 +879,7 @@ public class mainFrame extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
+                .addGap(0, 224, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout ExpensePanelLayout = new javax.swing.GroupLayout(ExpensePanel);
@@ -831,24 +936,24 @@ public class mainFrame extends javax.swing.JFrame {
 
         jScrollPane5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
 
-        jTable5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 14)); // NOI18N
+        jTable5.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Report Id", "Event Name", "Revenue", "Expenses"
+                "Report Id", "Event Name", "Revenue", "Expenses", "Profit"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -859,7 +964,9 @@ public class mainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable5.setRowHeight(40);
         jTable5.setShowGrid(false);
+        jTable5.setShowHorizontalLines(true);
         jTable5.getTableHeader().setResizingAllowed(false);
         jTable5.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(jTable5);
@@ -966,10 +1073,6 @@ public class mainFrame extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_crtAtdActionPerformed
 
-    private void crtRevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crtRevActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_crtRevActionPerformed
-
     private void crtExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crtExpActionPerformed
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1055,10 +1158,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // TODO add your handling code here:
-        
-        
-        
-        
+
         int index = jTable2.getSelectedRow();
         TableModel model = jTable2.getModel();
         String id = model.getValueAt(index, 0).toString();
@@ -1067,7 +1167,6 @@ public class mainFrame extends javax.swing.JFrame {
         String date = model.getValueAt(index, 3).toString();
         String event = model.getValueAt(index, 4).toString();
         String status = model.getValueAt(index, 5).toString();
-       
 
         atdRow.setVisible(true);
         atdRow.pack();
@@ -1079,11 +1178,64 @@ public class mainFrame extends javax.swing.JFrame {
         atdRow.dob.setText(date);
         atdRow.sts.setText(status);
         atdRow.eName.setSelectedItem(event);
-       
 
         //System.out.println(type);
-        
+
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void refreshAtdTable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAtdTable1ActionPerformed
+        // TODO add your handling code here:
+        fetchRevTable();
+    }//GEN-LAST:event_refreshAtdTable1ActionPerformed
+
+    private void refreshExpTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshExpTableActionPerformed
+        // TODO add your handling code here:
+        fetchExpTable();
+    }//GEN-LAST:event_refreshExpTableActionPerformed
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable3MouseClicked
+
+    private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked
+        // TODO add your handling code here:
+
+        int index = jTable4.getSelectedRow();
+        TableModel model = jTable4.getModel();
+        String id = model.getValueAt(index, 0).toString();
+        String exp_eventName = model.getValueAt(index, 1).toString();
+        String expTitle = model.getValueAt(index, 2).toString();
+        String desc = model.getValueAt(index, 3).toString();
+        String exp_amount = model.getValueAt(index, 4).toString();
+        String exp_date = model.getValueAt(index, 5).toString();
+        String sts = model.getValueAt(index, 6).toString();
+
+        expRow.setVisible(true);
+        expRow.pack();
+        expRow.setLocationRelativeTo(null);
+
+        expRow.id = id;
+        expRow.title.setText(expTitle);
+        expRow.eventName.setText(exp_eventName);
+        expRow.date.setText(exp_date);
+        expRow.description.setText(desc);
+        expRow.amount.setText(exp_amount);
+        //eventRow.V_eventLocation.setText(vLocation);
+        //expRow.V_eventPrice.setText(price);
+
+        //System.out.println(type);
+        if (sts.equals("Paid")) {
+
+            expRow.paidRadioBtn.setSelected(true);
+
+        } else if (sts.equals("Pending")) {
+            expRow.pendingRadioBtn.setSelected(true);
+
+        } else if (sts.equals("Failed")) {
+            expRow.failedRadioBtn.setSelected(true);
+
+        }
+    }//GEN-LAST:event_jTable4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1098,7 +1250,6 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JButton crtAtd;
     private javax.swing.JButton crtEvtBtn;
     private javax.swing.JButton crtExp;
-    private javax.swing.JButton crtRev;
     private javax.swing.JButton eventBtn;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JButton expBtn;
@@ -1128,7 +1279,9 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JButton refreshAtdTable;
+    private javax.swing.JButton refreshAtdTable1;
     private javax.swing.JButton refreshEvtTable;
+    private javax.swing.JButton refreshExpTable;
     private javax.swing.JButton repBtn;
     private javax.swing.JButton revBtn;
     private javax.swing.JPanel sidePanel;

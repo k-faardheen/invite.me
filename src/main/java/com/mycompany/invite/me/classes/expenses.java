@@ -21,15 +21,16 @@ import javax.swing.JOptionPane;
  *
  * @author faardheen
  */
-public class expenses implements CRUD_interface{
+public class expenses implements CRUD_interface {
+
     private String eventName;
     private String title;
     private String description;
-    private double amount;
+    private String amount;
     private String date;
     private String status;
 
-    public expenses(String eventName, String title, String description, double amount, String date, String status) {
+    public expenses(String eventName, String title, String description, String amount, String date, String status) {
         this.eventName = eventName;
         this.title = title;
         this.description = description;
@@ -62,11 +63,11 @@ public class expenses implements CRUD_interface{
         this.description = description;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -85,7 +86,8 @@ public class expenses implements CRUD_interface{
     public void setStatus(String status) {
         this.status = status;
     }
-        @Override
+
+    @Override
     public Connection connect() {
 
         try {
@@ -103,7 +105,7 @@ public class expenses implements CRUD_interface{
         }
         return con;
     }
-    
+
     @Override
     public void create() {
 
@@ -112,7 +114,7 @@ public class expenses implements CRUD_interface{
             ps.setString(1, getEventName());
             ps.setString(2, getTitle());
             ps.setString(3, getDescription());
-            ps.setDouble(4, getAmount());
+            ps.setString(4, getAmount());
             ps.setString(5, getDate());
             ps.setString(6, getStatus());
             ps.executeUpdate();
@@ -122,9 +124,23 @@ public class expenses implements CRUD_interface{
             Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    @Override
-    public void update(String id) { 
 
+    @Override
+    public void update(String id) {
+        try {
+            PreparedStatement ps = connect().prepareStatement("UPDATE  expenses  SET eventName=?, title=?, description=?, amount=?, date=?, status=? where expenseId=?");
+            ps.setString(1, getEventName());
+            ps.setString(2, getTitle());
+            ps.setString(3, getDescription());
+            ps.setString(4, getAmount());
+            ps.setString(5, getDate());
+            ps.setString(6, getStatus());
+            ps.setString(7, id);
+            ps.executeUpdate();
+            //System.out.println("Inserted sucessfully");
+            JOptionPane.showMessageDialog(null, "Updated sucessfully");
+        } catch (SQLException ex) {
+            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
