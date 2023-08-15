@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2023 at 05:33 PM
+-- Generation Time: Aug 15, 2023 at 10:44 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -28,13 +28,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `attendee` (
-  `attendeetId` int(11) NOT NULL,
-  `fullName` int(11) NOT NULL,
-  `contactDetails` int(11) NOT NULL,
-  `dob` int(11) NOT NULL,
-  `eventName` int(11) NOT NULL,
-  `status` int(11) NOT NULL
+  `attendeeId` int(11) NOT NULL,
+  `fullName` varchar(30) NOT NULL,
+  `contactDetails` varchar(50) NOT NULL,
+  `dob` varchar(20) NOT NULL,
+  `eventName` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendee`
+--
+
+INSERT INTO `attendee` (`attendeeId`, `fullName`, `contactDetails`, `dob`, `eventName`, `status`) VALUES
+(1, 'muntaswir', 'test', 'test', 'C++', 'test'),
+(2, 'faar', 'test', 'test', 'FRCI', 'test'),
+(3, 'test2', 'test', 'test', 'DevCon', 'test'),
+(5, 'faar', 'test', 'test', 'C++', 'test'),
+(6, 'mun', 'test', 'test', 'C++', 'test');
 
 -- --------------------------------------------------------
 
@@ -63,6 +74,22 @@ INSERT INTO `event` (`eventId`, `eventName`, `description`, `date`, `duration`, 
 (6, 'FRCI', 'test', 'test', 'test', 'test', 'PHOENIX', 'seminar', 'Akthar'),
 (9, 'DevCon', 'Test', 'Test', 'Test', 'Test', 'Test', 'Conference', 'Faar');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `expenseId` int(11) NOT NULL,
+  `eventName` varchar(30) NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `description` text NOT NULL,
+  `amount` varchar(50) NOT NULL,
+  `date` varchar(10) NOT NULL,
+  `status` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -71,13 +98,19 @@ INSERT INTO `event` (`eventId`, `eventName`, `description`, `date`, `duration`, 
 -- Indexes for table `attendee`
 --
 ALTER TABLE `attendee`
-  ADD PRIMARY KEY (`attendeetId`);
+  ADD PRIMARY KEY (`attendeeId`);
 
 --
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`eventId`);
+
+--
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`expenseId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -87,13 +120,19 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT for table `attendee`
 --
 ALTER TABLE `attendee`
-  MODIFY `attendeetId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `attendeeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `expenseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
