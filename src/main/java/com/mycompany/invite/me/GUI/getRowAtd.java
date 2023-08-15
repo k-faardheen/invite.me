@@ -25,13 +25,14 @@ public class getRowAtd extends javax.swing.JFrame {
     /**
      * Creates new form getRowatd
      */
-    
     public String atdId;
+
     public getRowAtd() {
         initComponents();
         fillCombo();
     }
-       public Connection connect() {
+
+    public Connection connect() {
 
         try {
 
@@ -48,18 +49,16 @@ public class getRowAtd extends javax.swing.JFrame {
         }
         return con;
     }
-public void fillCombo(){
 
+    public void fillCombo() {
 
         try {
-          
 
             PreparedStatement ps = connect().prepareStatement("select eventName from event");
             ResultSet rs = ps.executeQuery();
-         
 
             while (rs.next()) {
-               eName.addItem(rs.getString("eventName"));
+                eName.addItem(rs.getString("eventName"));
 
             }
 
@@ -67,7 +66,8 @@ public void fillCombo(){
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-}
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -384,19 +384,19 @@ public void fillCombo(){
         // TODO add your handling code here:===========
         String name = fName.getText();
         String details = cntDtl.getText();
-        String a_dob=dob.getText();
+        String a_dob = dob.getText();
         String status = sts.getText();
         String eve_name = eName.getSelectedItem().toString();
 
-        attendee atd = new attendee(name, details, a_dob,eve_name,status );
+        attendee atd = new attendee(name, details, a_dob, eve_name, status);
         atd.update(atdId);
         this.dispose();
     }//GEN-LAST:event_updateActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        
-         int res = JOptionPane.showConfirmDialog(this, "Do you wan to permanetly delete this record?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        int res = JOptionPane.showConfirmDialog(this, "Do you wan to permanetly delete this record?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (res == JOptionPane.YES_OPTION) {
 
             try {

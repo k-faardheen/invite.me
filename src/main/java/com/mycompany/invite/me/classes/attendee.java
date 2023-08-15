@@ -134,7 +134,7 @@ public class attendee implements CRUD_interface{
 
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Updated sucessfully");
+           JOptionPane.showMessageDialog(null, "Updated sucessfully");
         } catch (SQLException ex) {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }

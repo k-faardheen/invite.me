@@ -4,19 +4,48 @@
  */
 package com.mycompany.invite.me.GUI;
 
+import com.mycompany.invite.me.InviteMe;
+import com.mycompany.invite.me.classes.event.workshop;
+import com.mycompany.invite.me.classes.expenses;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
-import com.mycompany.invite.me.classes.expenses;
-
-public class createExp extends javax.swing.JFrame {
+public class getRowExp extends javax.swing.JFrame {
 
     /**
-     * Creates new form createAtd
+     * Creates new form getRowExp
      */
-    public createExp() {
+    public String id;
+
+    public getRowExp() {
         initComponents();
+    }
+
+    public Connection connect() {
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con;
     }
 
     /**
@@ -28,6 +57,7 @@ public class createExp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -45,7 +75,8 @@ public class createExp extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         description = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
-        addExp = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         paidRadioBtn = new javax.swing.JRadioButton();
         pendingRadioBtn = new javax.swing.JRadioButton();
@@ -54,8 +85,7 @@ public class createExp extends javax.swing.JFrame {
         amount = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -64,7 +94,7 @@ public class createExp extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Add Expense");
+        jLabel1.setText("View Expense");
         jPanel5.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jLabel2.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
@@ -194,14 +224,25 @@ public class createExp extends javax.swing.JFrame {
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
-        addExp.setBackground(new java.awt.Color(51, 51, 51));
-        addExp.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        addExp.setForeground(new java.awt.Color(255, 255, 255));
-        addExp.setText("Add");
-        addExp.setBorderPainted(false);
-        addExp.addActionListener(new java.awt.event.ActionListener() {
+        update.setBackground(new java.awt.Color(51, 51, 51));
+        update.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        update.setForeground(new java.awt.Color(255, 255, 255));
+        update.setText("Update");
+        update.setBorderPainted(false);
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addExpActionPerformed(evt);
+                updateActionPerformed(evt);
+            }
+        });
+
+        delete.setBackground(new java.awt.Color(51, 51, 51));
+        delete.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
+        delete.setForeground(new java.awt.Color(255, 255, 255));
+        delete.setText("Delete");
+        delete.setBorderPainted(false);
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
             }
         });
 
@@ -210,18 +251,23 @@ public class createExp extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(addExp, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addExp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
+        buttonGroup1.add(paidRadioBtn);
         paidRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         paidRadioBtn.setText("Paid");
         paidRadioBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -230,6 +276,7 @@ public class createExp extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(pendingRadioBtn);
         pendingRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         pendingRadioBtn.setText("Pending");
         pendingRadioBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -238,6 +285,7 @@ public class createExp extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(failedRadioBtn);
         failedRadioBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         failedRadioBtn.setText("Failed");
         failedRadioBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +378,7 @@ public class createExp extends javax.swing.JFrame {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel4);
@@ -339,15 +387,21 @@ public class createExp extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_titleActionPerformed
 
     private void eventNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventNameActionPerformed
         // TODO add your handling code here:
@@ -357,12 +411,13 @@ public class createExp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dateActionPerformed
 
-    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
+    private void descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_amountActionPerformed
+    }//GEN-LAST:event_descriptionActionPerformed
 
-    private void addExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExpActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+
         String name = eventName.getText();
         String eventTitle = title.getText();
         String eventDesc = description.getText();
@@ -379,14 +434,10 @@ public class createExp extends javax.swing.JFrame {
         }
 
         expenses exp = new expenses(name, eventTitle, eventDesc, eventAmt, eventDate, status);
-        exp.create();
+        exp.update(id);
         this.dispose();
 
-    }//GEN-LAST:event_addExpActionPerformed
-
-    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_titleActionPerformed
+    }//GEN-LAST:event_updateActionPerformed
 
     private void paidRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paidRadioBtnActionPerformed
         // TODO add your handling code here:
@@ -400,18 +451,76 @@ public class createExp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_failedRadioBtnActionPerformed
 
-    private void descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionActionPerformed
+    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_descriptionActionPerformed
+    }//GEN-LAST:event_amountActionPerformed
 
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+
+        int res = JOptionPane.showConfirmDialog(this, "Do you wan to permanetly delete this record?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (res == JOptionPane.YES_OPTION) {
+
+            try {
+
+                PreparedStatement ps = connect().prepareStatement("DELETE from expenses where expenseId=?");
+
+                ps.setString(1, id);
+                ps.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Deleted sucessfully");
+                this.dispose();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_deleteActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(getRowExp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(getRowExp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(getRowExp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(getRowExp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new getRowExp().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addExp;
-    private javax.swing.JTextField amount;
-    private javax.swing.JTextField date;
-    private javax.swing.JTextField description;
-    private javax.swing.JTextField eventName;
-    private javax.swing.JRadioButton failedRadioBtn;
+    public javax.swing.JTextField amount;
+    private javax.swing.ButtonGroup buttonGroup1;
+    public javax.swing.JTextField date;
+    private javax.swing.JButton delete;
+    public javax.swing.JTextField description;
+    public javax.swing.JTextField eventName;
+    public javax.swing.JRadioButton failedRadioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -428,8 +537,9 @@ public class createExp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton paidRadioBtn;
-    private javax.swing.JRadioButton pendingRadioBtn;
-    private javax.swing.JTextField title;
+    public javax.swing.JRadioButton paidRadioBtn;
+    public javax.swing.JRadioButton pendingRadioBtn;
+    public javax.swing.JTextField title;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
