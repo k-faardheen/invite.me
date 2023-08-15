@@ -2,9 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.invite.me.classes;
+package com.mycompany.invite.me.classes.event;
 
 import com.mycompany.invite.me.InviteMe;
+import com.mycompany.invite.me.classes.CRUD_interface;
+import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
+import static com.mycompany.invite.me.classes.CRUD_interface.driver;
+import static com.mycompany.invite.me.classes.CRUD_interface.pwd;
+import static com.mycompany.invite.me.classes.CRUD_interface.user;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,37 +22,37 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class workshop extends event implements CRUD_interface {
+public class seminar extends event implements CRUD_interface {
 
-    private String instructor;
-    private String material;
+    private String speaker;
+    private String topic;
 
-    public workshop(String eventName, String description, String date, String duration, String price, Venue venue, String instructor, String material) {
+    public seminar(String eventName, String description, String date, String duration, String price, Venue venue, String speaker, String topic) {
         super(eventName, description, date, duration, price, venue);
-        this.instructor = instructor;
-        this.material = material;
+        this.speaker = speaker;
+        this.topic = topic;
         setType();
     }
 
-    public String getInstructor() {
-        return instructor;
+    public String getSpeaker() {
+        return speaker;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setSpeaker(String speaker) {
+        this.speaker = speaker;
     }
 
-    public String getMaterial() {
-        return material;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     @Override
     public void setType() {
-        super.type = "workshop";
+        super.type = "seminar";
     }
 
     public String getType() {
@@ -78,12 +83,6 @@ public class workshop extends event implements CRUD_interface {
         return super.price;
     }
 
-    public void display() {
-        //super.display();
-        //System.out.println("workshop{" + "instructor=" + instructor + ", material=" + material + '}');
-
-    }
-
     @Override
     public Connection connect() {
 
@@ -105,6 +104,7 @@ public class workshop extends event implements CRUD_interface {
 
     @Override
     public void create() {
+
         try {
             PreparedStatement ps = connect().prepareStatement("insert into event(eventName, description, date, duration, price, venue, type, speaker)values(?,?,?,?,?,?,?,?)");
             ps.setString(1, getEventName());
@@ -114,7 +114,7 @@ public class workshop extends event implements CRUD_interface {
             ps.setString(5, getPrice());
             ps.setString(6, getVenue().getVenueName());
             ps.setString(7, getType());
-            ps.setString(8, getInstructor());
+            ps.setString(8, getSpeaker());
             ps.executeUpdate();
             //System.out.println("Inserted sucessfully");
             JOptionPane.showMessageDialog(null, "Inserted sucessfully");
@@ -135,7 +135,7 @@ public class workshop extends event implements CRUD_interface {
             ps.setString(5, getPrice());
             ps.setString(6, getVenue().getVenueName());
             ps.setString(7, getType());
-            ps.setString(8, getInstructor());
+            ps.setString(8, getSpeaker());
             ps.setString(9, id);
 
             ps.executeUpdate();
