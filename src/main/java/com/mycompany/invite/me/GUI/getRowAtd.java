@@ -6,7 +6,7 @@ package com.mycompany.invite.me.GUI;
 
 import com.mycompany.invite.me.InviteMe;
 import com.mycompany.invite.me.classes.attendee;
-import com.mycompany.invite.me.classes.event.workshop;
+import com.mycompany.invite.me.classes.workshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

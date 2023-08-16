@@ -5,11 +5,12 @@
 package com.mycompany.invite.me.GUI;
 
 import com.mycompany.invite.me.InviteMe;
-import com.mycompany.invite.me.classes.event.workshop;
+import com.mycompany.invite.me.classes.workshop;
 import com.mycompany.invite.me.classes.expenses;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ public class getRowExp extends javax.swing.JFrame {
 
     public getRowExp() {
         initComponents();
+        fillCombo();
     }
 
     public Connection connect() {
@@ -46,6 +48,26 @@ public class getRowExp extends javax.swing.JFrame {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
+    }
+
+    public void fillCombo() {
+      
+
+        try {
+            
+
+            PreparedStatement ps = connect().prepareStatement("select eventName from event");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                eventName.addItem(rs.getString("eventName"));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -67,7 +89,7 @@ public class getRowExp extends javax.swing.JFrame {
         title = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        eventName = new javax.swing.JTextField();
+        eventName = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         date = new javax.swing.JTextField();
@@ -85,7 +107,7 @@ public class getRowExp extends javax.swing.JFrame {
         amount = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -133,32 +155,27 @@ public class getRowExp extends javax.swing.JFrame {
         jLabel5.setText("Event");
 
         eventName.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventName.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventNameActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(213, 213, 213))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel5)
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(eventName)
+                .addContainerGap())
         );
 
         jLabel6.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
@@ -403,10 +420,6 @@ public class getRowExp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_titleActionPerformed
 
-    private void eventNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eventNameActionPerformed
-
     private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dateActionPerformed
@@ -418,7 +431,7 @@ public class getRowExp extends javax.swing.JFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
 
-        String name = eventName.getText();
+        String name = eventName.getSelectedItem().toString();
         String eventTitle = title.getText();
         String eventDesc = description.getText();
         String eventAmt = amount.getText();
@@ -519,7 +532,7 @@ public class getRowExp extends javax.swing.JFrame {
     public javax.swing.JTextField date;
     private javax.swing.JButton delete;
     public javax.swing.JTextField description;
-    public javax.swing.JTextField eventName;
+    public javax.swing.JComboBox<String> eventName;
     public javax.swing.JRadioButton failedRadioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

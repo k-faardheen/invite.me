@@ -5,19 +5,21 @@
 package com.mycompany.invite.me.GUI;
 
 import com.mycompany.invite.me.InviteMe;
-import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
-import static com.mycompany.invite.me.classes.CRUD_interface.driver;
-import static com.mycompany.invite.me.classes.CRUD_interface.pwd;
-import static com.mycompany.invite.me.classes.CRUD_interface.user;
 import com.mycompany.invite.me.classes.attendee;
-import com.mycompany.invite.me.classes.event.workshop;
+import com.mycompany.invite.me.classes.conference;
+import com.mycompany.invite.me.classes.event;
+import com.mycompany.invite.me.classes.seminar;
+import com.mycompany.invite.me.classes.workshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,10 +33,12 @@ public class createAtd extends javax.swing.JFrame {
     public createAtd() {
         initComponents();
         fillCombo();
-         
+
     }
-public void fillCombo(){
-try {
+
+    public Connection connect() {
+
+        try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -47,16 +51,18 @@ try {
         } catch (SQLException ex) {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        return con;
+    }
 
-            PreparedStatement ps = con.prepareStatement("select eventName from event");
+    public void fillCombo() {
+
+        try {
+
+            PreparedStatement ps = connect().prepareStatement("select eventName from event");
             ResultSet rs = ps.executeQuery();
-         
 
             while (rs.next()) {
-               eName.addItem(rs.getString("eventName"));
+                eName.addItem(rs.getString("eventName"));
 
             }
 
@@ -64,7 +70,8 @@ try {
             Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-}
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -362,12 +369,41 @@ try {
         // TODO add your handling code here:===========
         String name = fName.getText();
         String details = cntDtl.getText();
-        String a_dob=dob.getText();
+        String a_dob = dob.getText();
         String status = sts.getText();
         String eve_name = eName.getSelectedItem().toString();
-       
-        attendee atd = new attendee(name, details, a_dob,eve_name,status );
-        atd.create();
+
+        //event event = new event(name, details, a_dob,eve_name,status);
+        //attendee atd = new attendee(name, details, a_dob,eve_name,status );
+        // atd.create();
+        try {
+            PreparedStatement ps = connect().prepareStatement("SELECT type from event where eventName=?;");
+            ps.setString(1, eve_name);
+            ResultSet rs = ps.executeQuery();
+
+            //ResultSetMetaData rsmd = rs.getMetaData();
+            
+            rs.next();
+            String type = rs.getString(1);
+            //System.out.println(type);
+            System.out.println(type);
+            if(type.equals("Conference")){
+                
+                conference con = new conference(name, details, a_dob,eve_name,status);
+                con.addAtd();
+                
+            }else if(type.equals("workshop")){
+                 workshop ws = new workshop(name, details, a_dob,eve_name,status);
+                ws.addAtd();
+            }else if(type.equals("seminar")){
+                 seminar sm = new seminar(name, details, a_dob,eve_name,status);
+                sm.addAtd();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         this.dispose();
     }//GEN-LAST:event_addEvtActionPerformed
 
@@ -375,8 +411,6 @@ try {
         // TODO add your handling code here:
     }//GEN-LAST:event_fNameActionPerformed
 
-   
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEvt;

@@ -4,10 +4,10 @@
  */
 package com.mycompany.invite.me.GUI.event;
 
-import com.mycompany.invite.me.classes.event.Venue;
-import com.mycompany.invite.me.classes.event.conference;
-import com.mycompany.invite.me.classes.event.seminar;
-import com.mycompany.invite.me.classes.event.workshop;
+import com.mycompany.invite.me.classes.Venue;
+import com.mycompany.invite.me.classes.conference;
+import com.mycompany.invite.me.classes.seminar;
+import com.mycompany.invite.me.classes.workshop;
 
 /**
  *
