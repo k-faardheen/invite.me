@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.invite.me.classes.event;
+package com.mycompany.invite.me.classes;
 
 import com.mycompany.invite.me.InviteMe;
 import com.mycompany.invite.me.classes.CRUD_interface;
@@ -26,12 +26,23 @@ public class conference extends event implements CRUD_interface {
 
     private String speaker;
     private String sponsors;
-
+    attendee atd;
     public conference(String speakers, String sponsors, String eventName, String description, String date, String duration, String price, Venue venue) {
         super(eventName, description, date, duration, price, venue);
         this.speaker = speakers;
         this.sponsors = sponsors;
         setType();
+    }
+
+   
+    public conference(String name, String contDetails, String dob, String eveName, String status) {
+        super(null, null,null,null,null, null);
+        this.atd = new attendee(name, contDetails, dob, eveName, status);
+
+    }
+
+    public void addAtd() {
+        this.atd.create(); 
     }
 
     public String getSpeaker() {

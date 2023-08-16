@@ -8,7 +8,16 @@ package com.mycompany.invite.me.GUI;
  *
  * @author Admin
  */
+import com.mycompany.invite.me.InviteMe;
+import com.mycompany.invite.me.classes.workshop;
 import com.mycompany.invite.me.classes.expenses;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class createExp extends javax.swing.JFrame {
 
@@ -17,6 +26,38 @@ public class createExp extends javax.swing.JFrame {
      */
     public createExp() {
         initComponents();
+        fillCombo();
+    }
+
+    public void fillCombo() {
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
+
+            PreparedStatement ps = con.prepareStatement("select eventName from event");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                eventName.addItem(rs.getString("eventName"));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(workshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -37,7 +78,7 @@ public class createExp extends javax.swing.JFrame {
         title = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        eventName = new javax.swing.JTextField();
+        eventName = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         date = new javax.swing.JTextField();
@@ -103,32 +144,27 @@ public class createExp extends javax.swing.JFrame {
         jLabel5.setText("Event");
 
         eventName.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
-        eventName.setPreferredSize(new java.awt.Dimension(64, 30));
-        eventName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eventNameActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(213, 213, 213))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(eventName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel5)
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(eventName)
+                .addContainerGap())
         );
 
         jLabel6.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
@@ -330,7 +366,7 @@ public class createExp extends javax.swing.JFrame {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel4);
@@ -349,10 +385,6 @@ public class createExp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void eventNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eventNameActionPerformed
-
     private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dateActionPerformed
@@ -363,7 +395,7 @@ public class createExp extends javax.swing.JFrame {
 
     private void addExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addExpActionPerformed
         // TODO add your handling code here:
-        String name = eventName.getText();
+        String name = eventName.getSelectedItem().toString();
         String eventTitle = title.getText();
         String eventDesc = description.getText();
         String eventAmt = amount.getText();
@@ -410,7 +442,7 @@ public class createExp extends javax.swing.JFrame {
     private javax.swing.JTextField amount;
     private javax.swing.JTextField date;
     private javax.swing.JTextField description;
-    private javax.swing.JTextField eventName;
+    private javax.swing.JComboBox<String> eventName;
     private javax.swing.JRadioButton failedRadioBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

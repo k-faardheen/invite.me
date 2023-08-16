@@ -9,7 +9,6 @@ import static com.mycompany.invite.me.classes.CRUD_interface.DB_URL;
 import static com.mycompany.invite.me.classes.CRUD_interface.driver;
 import static com.mycompany.invite.me.classes.CRUD_interface.pwd;
 import static com.mycompany.invite.me.classes.CRUD_interface.user;
-import com.mycompany.invite.me.classes.event.workshop;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
