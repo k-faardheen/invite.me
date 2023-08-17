@@ -269,6 +269,7 @@ public class mainFrame extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("invite.me");
 
         sidePanel.setBackground(new java.awt.Color(217, 217, 217));
         sidePanel.setPreferredSize(new java.awt.Dimension(300, 800));
@@ -287,9 +288,11 @@ public class mainFrame extends javax.swing.JFrame {
         eventBtn.setBackground(new java.awt.Color(51, 51, 51));
         eventBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         eventBtn.setForeground(new java.awt.Color(255, 255, 255));
+        eventBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/planner(1).png"))); // NOI18N
         eventBtn.setText("Event");
         eventBtn.setBorderPainted(false);
         eventBtn.setFocusable(false);
+        eventBtn.setIconTextGap(15);
         eventBtn.setPreferredSize(new java.awt.Dimension(200, 35));
         eventBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,9 +303,11 @@ public class mainFrame extends javax.swing.JFrame {
         atdBtn.setBackground(new java.awt.Color(51, 51, 51));
         atdBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         atdBtn.setForeground(new java.awt.Color(255, 255, 255));
+        atdBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/staff(1).png"))); // NOI18N
         atdBtn.setText("Attendees");
         atdBtn.setBorderPainted(false);
         atdBtn.setFocusable(false);
+        atdBtn.setIconTextGap(15);
         atdBtn.setPreferredSize(new java.awt.Dimension(200, 35));
         atdBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,9 +318,11 @@ public class mainFrame extends javax.swing.JFrame {
         revBtn.setBackground(new java.awt.Color(51, 51, 51));
         revBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         revBtn.setForeground(new java.awt.Color(255, 255, 255));
+        revBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/revenue(1).png"))); // NOI18N
         revBtn.setText("Revenue");
         revBtn.setBorderPainted(false);
         revBtn.setFocusable(false);
+        revBtn.setIconTextGap(15);
         revBtn.setPreferredSize(new java.awt.Dimension(200, 35));
         revBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,9 +333,11 @@ public class mainFrame extends javax.swing.JFrame {
         expBtn.setBackground(new java.awt.Color(51, 51, 51));
         expBtn.setFont(new java.awt.Font("HelveticaNowMicro Medium", 0, 12)); // NOI18N
         expBtn.setForeground(new java.awt.Color(255, 255, 255));
+        expBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/expenses(1).png"))); // NOI18N
         expBtn.setText("Expenses");
         expBtn.setBorderPainted(false);
         expBtn.setFocusable(false);
+        expBtn.setIconTextGap(15);
         expBtn.setPreferredSize(new java.awt.Dimension(200, 35));
         expBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
