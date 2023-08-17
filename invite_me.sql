@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2023 at 10:44 PM
+-- Generation Time: Aug 17, 2023 at 08:34 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -41,11 +41,7 @@ CREATE TABLE `attendee` (
 --
 
 INSERT INTO `attendee` (`attendeeId`, `fullName`, `contactDetails`, `dob`, `eventName`, `status`) VALUES
-(1, 'muntaswir', 'test', 'test', 'C++', 'test'),
-(2, 'faar', 'test', 'test', 'FRCI', 'test'),
-(3, 'test2', 'test', 'test', 'DevCon', 'test'),
-(5, 'faar', 'test', 'test', 'C++', 'test'),
-(6, 'mun', 'test', 'test', 'C++', 'test');
+(14, 'et', 'et', 'et', 'et', 'etc');
 
 -- --------------------------------------------------------
 
@@ -70,9 +66,7 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`eventId`, `eventName`, `description`, `date`, `duration`, `price`, `venue`, `type`, `speaker`) VALUES
-(3, 'C++', 'sf', 'df', 'sdfwe', 'wr', 'wet', 'workshop', 'MUNTASWIR'),
-(6, 'FRCI', 'test', 'test', 'test', 'test', 'PHOENIX', 'seminar', 'Akthar'),
-(9, 'DevCon', 'Test', 'Test', 'Test', 'Test', 'Test', 'Conference', 'Faar');
+(11, 'et', 'et', 'et', 'et', 'et', 'et', 'workshop', 'et');
 
 -- --------------------------------------------------------
 
@@ -89,6 +83,33 @@ CREATE TABLE `expenses` (
   `date` varchar(10) NOT NULL,
   `status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`expenseId`, `eventName`, `title`, `description`, `amount`, `date`, `status`) VALUES
+(5, 'et', 'et', 'et', 'et', 'et', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `username`, `password`) VALUES
+(1, 'muntaswir', 123),
+(2, 'faar', 123);
 
 --
 -- Indexes for dumped tables
@@ -113,6 +134,12 @@ ALTER TABLE `expenses`
   ADD PRIMARY KEY (`expenseId`);
 
 --
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -120,19 +147,25 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `attendee`
 --
 ALTER TABLE `attendee`
-  MODIFY `attendeeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `attendeeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expenseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `expenseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

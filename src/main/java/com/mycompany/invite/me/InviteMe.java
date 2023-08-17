@@ -3,6 +3,7 @@
  */
 package com.mycompany.invite.me;
 
+import com.mycompany.invite.me.GUI.loginIn;
 import com.mycompany.invite.me.GUI.mainFrame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,21 +18,16 @@ public class InviteMe {
 
     public static void main(String[] args) throws SQLException {
 
-       // try {
-            
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new mainFrame().setVisible(true);
-                }
-            });
-
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(InviteMe.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/invite.me", "root", "");
-//        System.out.println(con);
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//                    new mainFrame().setVisible(true);
+//                }
+//            });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new loginIn().setVisible(true);
+            }
+        });
 
     }
 }

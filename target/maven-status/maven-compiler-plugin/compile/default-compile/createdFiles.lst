@@ -1,6 +1,7 @@
 com\mycompany\invite\me\GUI\createAtd.class
 com\mycompany\invite\me\GUI\getRowExp$10.class
 com\mycompany\invite\me\GUI\mainFrame$18.class
+com\mycompany\invite\me\GUI\loginIn$1.class
 com\mycompany\invite\me\classes\CRUD_interface.class
 com\mycompany\invite\me\GUI\event\createEvt$16.class
 com\mycompany\invite\me\GUI\event\getRowEvent$2.class
@@ -89,6 +90,7 @@ com\mycompany\invite\me\GUI\event\getRowEvent$1.class
 com\mycompany\invite\me\GUI\getRowAtd$5.class
 com\mycompany\invite\me\GUI\getRowExp$2.class
 com\mycompany\invite\me\classes\expenses.class
+com\mycompany\invite\me\GUI\loginIn$2.class
 com\mycompany\invite\me\GUI\mainFrame$13.class
 com\mycompany\invite\me\classes\workshop.class
 com\mycompany\invite\me\GUI\createExp$4.class
@@ -99,6 +101,7 @@ com\mycompany\invite\me\GUI\getRowExp$8.class
 com\mycompany\invite\me\GUI\mainFrame$14.class
 com\mycompany\invite\me\GUI\createExp$3.class
 com\mycompany\invite\me\GUI\event\createEvt$7.class
+com\mycompany\invite\me\GUI\loginIn.class
 com\mycompany\invite\me\GUI\mainFrame$25.class
 com\mycompany\invite\me\GUI\mainFrame$5.class
 com\mycompany\invite\me\GUI\getRowExp$1.class
